@@ -81,14 +81,14 @@ echo "certbot certonly --manual --preferred-challenges dns \
   --manual-auth-hook /scripts/auth.sh \
   --manual-cleanup-hook /scripts/cleanup.sh \
   ${CHAIN_PARAM[@]} $EMAIL_PARAM -d $LETSENCRYPT_DOMAIN \
-  --agree-tos --manual-public-ip-logging-ok --keep $TEST_PARAM"
+  --agree-tos --keep $TEST_PARAM"
 
 # Create certificates
 certbot certonly --manual --preferred-challenges dns \
   --manual-auth-hook /scripts/auth.sh \
   --manual-cleanup-hook /scripts/cleanup.sh \
   "${CHAIN_PARAM[@]}" $EMAIL_PARAM -d $LETSENCRYPT_DOMAIN \
-  --agree-tos --manual-public-ip-logging-ok --keep $TEST_PARAM
+  --agree-tos --keep $TEST_PARAM
 
 chown -R $UID:$GID /etc/letsencrypt
 
@@ -108,6 +108,6 @@ while :; do
   sleep $((${LETSENCRYPT_DELAY} * 60)) # Convert to seconds
 
   echo "INFO: Attempting SSL certificate renewal"
-  certbot --manual-public-ip-logging-ok renew
+  certbot renew
   chown -R $UID:$GID /etc/letsencrypt
 done
